@@ -212,8 +212,8 @@ BLACS itself has three kind of types to describe values, none, constants (intege
   </ul>
   <h4><a href="#Io">Io</a></h4>
   <ul>
-  <li><a href="#read"><code><span class="http-method">post</span> /read/{sheet}</code></a></li>
-  <li><a href="#write"><code><span class="http-method">post</span> /write/{sheet}</code></a></li>
+  <li><a href="#readSheet"><code><span class="http-method">post</span> /read/{sheet}</code></a></li>
+  <li><a href="#writeSheet"><code><span class="http-method">post</span> /write/{sheet}</code></a></li>
   </ul>
 
   <h1><a name="Clock">Clock</a></h1>
@@ -263,12 +263,13 @@ BLACS itself has three kind of types to describe values, none, constants (intege
   </div> <!-- method -->
   <hr/>
   <h1><a name="Io">Io</a></h1>
-  <div class="method"><a name="read"/>
+  <div class="method"><a name="readSheet"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="post"><code class="huge"><span class="http-method">post</span> /read/{sheet}</code></pre></div>
-    <div class="method-summary">Reads from spreadsheet (<span class="nickname">read</span>)</div>
-    <div class="method-notes"></div>
+    <div class="method-summary">Reads from spreadsheet (<span class="nickname">readSheet</span>)</div>
+    <div class="method-notes">Reads from sheet the grid discribed by origin,width and length at time by agent identified by tag. If agent has no value defined use default.
+</div>
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
@@ -319,6 +320,12 @@ BLACS itself has three kind of types to describe values, none, constants (intege
   }
 } ]</code></pre>
 
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
 
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
@@ -329,12 +336,13 @@ BLACS itself has three kind of types to describe values, none, constants (intege
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="write"/>
+  <div class="method"><a name="writeSheet"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="post"><code class="huge"><span class="http-method">post</span> /write/{sheet}</code></pre></div>
-    <div class="method-summary">Writes to spreadsheet (<span class="nickname">write</span>)</div>
-    <div class="method-notes"></div>
+    <div class="method-summary">Writes to spreadsheet (<span class="nickname">writeSheet</span>)</div>
+    <div class="method-notes">Write on sheet the grid of dimension width by length at origin at time by agent identified with tag the values array in the same order.
+</div>
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
@@ -363,6 +371,12 @@ BLACS itself has three kind of types to describe values, none, constants (intege
     <!--Todo: process Response Object and its headers, schema, examples -->
 
 
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
 
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
@@ -428,7 +442,7 @@ BLACS itself has three kind of types to describe values, none, constants (intege
   </div>
   <div class="model">
     <h3 class="field-label"><a name="Time">Time - </a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>Time since epoch</div>
+    <div class='model-description'>Logical time</div>
     <div class="field-items">
           </div>  <!-- field-items -->
   </div>
