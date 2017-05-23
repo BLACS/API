@@ -180,7 +180,8 @@ font-style: italic;
   </head>
   <body>
   <h1>Pervasives functions for Big Data Layout for Asynchronous Computations on Spreadsheets (BLACS)</h1>
-    <div class="app-desc">With linearization of events the happened-before relation is evident an prevents race-conditions.
+    <div class="app-desc">## Logical Clock
+The logical time allows linearization, used to provide safe concurrency. With linearization of events the happened-before relation prevents race-conditions.
 ## IO Operations on the sheet
 Both read and write functions have a logical time parametere. This time is given by the clock service.
 This way, the relation happened-before is consistent.As well, to enable a multiagent each agent identifies itself with a tag. So, a value identified by three parameters. It coordinates, an agent tag and a logical time.
