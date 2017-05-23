@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Pervasives functions for BLACS</title>
+    <title>Pervasives functions for Big Data Layout for Asynchronous Computations on Spreadsheets (BLACS)</title>
     <style type="text/css">
       body {
 	font-family: Trebuchet MS, sans-serif;
@@ -179,10 +179,24 @@ font-style: italic;
     </style>
   </head>
   <body>
-  <h1>Pervasives functions for BLACS</h1>
-    <div class="app-desc">Provides pervasives functions for BLACS, particularly time and io.</div>
-    <div class="app-desc">More information: <a href="https://helloreverb.com">https://helloreverb.com</a></div>
-    <div class="app-desc">Contact Info: <a href="hello@helloreverb.com">hello@helloreverb.com</a></div>
+  <h1>Pervasives functions for Big Data Layout for Asynchronous Computations on Spreadsheets (BLACS)</h1>
+    <div class="app-desc">## Logical Clock 
+The logical time allows linearization, in order to provide safe concurrency a logical time is used.
+With linearization of events the happened-before relation is evident an prevents race-conditions.
+## IO Operations on the sheet
+Both read and write functions have a logical time parametere. This time is given by the clock service.
+This way, the relation happened-before is consistent.As well, to enable a multiagent each agent identifies itself with a tag. So, a value identified by three parameters. It coordinates, an agent tag and a logical time.
+In BLACS we describe a grid in a new format. Instead of using the convetional sequence between two coordinates like A1;B2 we describe it by the dimensions of the grid. Describing grids by comprehension, allows to describe easily all kinds of grids. In particular one could describe inifinite grids using special parameters ie. 0 lenght or width. Usefull when a user doesn't know how many cells are in a given grid.
+## Evaluation of a formula
+The evaluation of a given formula can be achieved by a single process or rather in parallel by many processes in an asynchronous way. To express this, a value defined by a formula is as well defined by a collection of promosises. A promise is formed of a date, a grid description and a constant value. Therefore, a promise of evaluation can be on a part of the formula. This allows having a collection of evaluators trying to compute the formula. The date, indicates when a promise will be valid. Before this date, the value of the promise shall not be considered. Should an evaluator fail to fulfill its promise the value should be labeled none. To indicate that an evaluation is still needed. 
+## Types
+### API Types
+In this API types are used to describe de arguments of a function. In particular read and write requests.
+### BLACS Types
+BLACS itself has three kind of types to describe values, none, constants (integers) and formulae (count). This types are used to ensure safety as well as make programming easier.
+</div>
+    <div class="app-desc">More information: <a href="https://github.com/BLACS">https://github.com/BLACS</a></div>
+    <div class="app-desc">Contact Info: <a href="colin.gonzalez@openmailbox.org">colin.gonzalez@openmailbox.org</a></div>
     <div class="app-desc">Version: 0.1</div>
     <div class="app-desc">BasePath:/blacs/pervasives/0.1</div>
     <div class="license-info">All rights reserved</div>
@@ -284,7 +298,7 @@ font-style: italic;
   "value" : {
     "data" : [ 1.3579000000000001069366817318950779736042022705078125 ],
     "ty" : "aeiou",
-    "promise" : [ {
+    "promises" : [ {
       "date" : { },
       "domain" : [ 1.3579000000000001069366817318950779736042022705078125 ],
       "value" : 1.3579000000000001069366817318950779736042022705078125
@@ -409,7 +423,7 @@ font-style: italic;
     <div class="field-items">
       <div class="param">ty </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">data </div><div class="param-desc"><span class="param-type"><a href="#number">array[BigDecimal]</a></span>  </div>
-<div class="param">promise </div><div class="param-desc"><span class="param-type"><a href="#Promise">array[Promise]</a></span>  </div>
+<div class="param">promises (optional)</div><div class="param-desc"><span class="param-type"><a href="#Promise">array[Promise]</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
