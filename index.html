@@ -180,9 +180,7 @@ font-style: italic;
   </head>
   <body>
   <h1>Pervasives functions for Big Data Layout for Asynchronous Computations on Spreadsheets (BLACS)</h1>
-    <div class="app-desc">## Logical Clock 
-The logical time allows linearization, in order to provide safe concurrency a logical time is used.
-With linearization of events the happened-before relation is evident an prevents race-conditions.
+    <div class="app-desc">With linearization of events the happened-before relation is evident an prevents race-conditions.
 ## IO Operations on the sheet
 Both read and write functions have a logical time parametere. This time is given by the clock service.
 This way, the relation happened-before is consistent.As well, to enable a multiagent each agent identifies itself with a tag. So, a value identified by three parameters. It coordinates, an agent tag and a logical time.
@@ -224,7 +222,7 @@ BLACS itself has three kind of types to describe values, none, constants (intege
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /time/{sheet}</code></pre></div>
     <div class="method-summary">Returns the next logical time. (<span class="nickname">getSheetTime</span>)</div>
-    <div class="method-notes">The time returned by the clock service is never the same per sheet and is totally ordered.
+    <div class="method-notes">The time advances after a call so that two subsequent calls are never equal.
 </div>
 
     <h3 class="field-label">Path parameters</h3>
@@ -234,11 +232,6 @@ BLACS itself has three kind of types to describe values, none, constants (intege
       <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the sheet </div>
     </div>  <!-- field-items -->
 
-    <h3 class="field-label">Consumes</h3>
-    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
-    <ul>
-      <li><code>application/json</code></li>
-    </ul>
 
 
 
@@ -256,6 +249,12 @@ BLACS itself has three kind of types to describe values, none, constants (intege
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>1.3579000000000001069366817318950779736042022705078125</code></pre>
 
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
 
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
