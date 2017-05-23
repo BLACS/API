@@ -210,22 +210,29 @@ BLACS itself has three kind of types to describe values, none, constants (intege
   <div class="method-summary"></div>
   <h4><a href="#Clock">Clock</a></h4>
   <ul>
-  <li><a href="#time"><code><span class="http-method">get</span> /time</code></a></li>
+  <li><a href="#getSheetTime"><code><span class="http-method">get</span> /time/{sheet}</code></a></li>
   </ul>
   <h4><a href="#Io">Io</a></h4>
   <ul>
-  <li><a href="#read"><code><span class="http-method">post</span> /read</code></a></li>
-  <li><a href="#write"><code><span class="http-method">post</span> /write</code></a></li>
+  <li><a href="#read"><code><span class="http-method">post</span> /read/{sheet}</code></a></li>
+  <li><a href="#write"><code><span class="http-method">post</span> /write/{sheet}</code></a></li>
   </ul>
 
   <h1><a name="Clock">Clock</a></h1>
-  <div class="method"><a name="time"/>
+  <div class="method"><a name="getSheetTime"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /time</code></pre></div>
-    <div class="method-summary">Returns the logical time. (<span class="nickname">time</span>)</div>
-    <div class="method-notes"></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /time/{sheet}</code></pre></div>
+    <div class="method-summary">Returns the next logical time. (<span class="nickname">getSheetTime</span>)</div>
+    <div class="method-notes">The time returned by the clock service is never the same per sheet and is totally ordered.
+</div>
 
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">sheet (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the sheet </div>
+    </div>  <!-- field-items -->
 
     <h3 class="field-label">Consumes</h3>
     This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
@@ -254,19 +261,22 @@ BLACS itself has three kind of types to describe values, none, constants (intege
     <h4 class="field-label">200</h4>
     succesful operation
         <a href="#BigDecimal">BigDecimal</a>
-    <h4 class="field-label">400</h4>
-    error
-        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <h1><a name="Io">Io</a></h1>
   <div class="method"><a name="read"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /read</code></pre></div>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /read/{sheet}</code></pre></div>
     <div class="method-summary">Reads from spreadsheet (<span class="nickname">read</span>)</div>
     <div class="method-notes"></div>
 
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">sheet (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the sheet </div>
+    </div>  <!-- field-items -->
 
     <h3 class="field-label">Consumes</h3>
     This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
@@ -323,10 +333,16 @@ BLACS itself has three kind of types to describe values, none, constants (intege
   <div class="method"><a name="write"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /write</code></pre></div>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /write/{sheet}</code></pre></div>
     <div class="method-summary">Writes to spreadsheet (<span class="nickname">write</span>)</div>
     <div class="method-notes"></div>
 
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">sheet (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the sheet </div>
+    </div>  <!-- field-items -->
 
     <h3 class="field-label">Consumes</h3>
     This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
