@@ -406,10 +406,13 @@ BLACS itself has three kind of types to describe values, none, constants (intege
 
   <div class="model">
     <h3 class="field-label"><a name="Coordinate">Coordinate - </a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'></div>
+    <div class='model-description'>The coordinates of a value in a sheet indexed by row and column number.
+</div>
     <div class="field-items">
-      <div class="param">row </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
-<div class="param">col </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+      <div class="param">row </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span> Row number
+ format: int64</div>
+<div class="param">col </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span> Column number
+ format: int64</div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -451,9 +454,12 @@ BLACS itself has three kind of types to describe values, none, constants (intege
     <h3 class="field-label"><a name="TypedValue">TypedValue - </a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'></div>
     <div class="field-items">
-      <div class="param">ty </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">data </div><div class="param-desc"><span class="param-type"><a href="#number">array[BigDecimal]</a></span>  </div>
-<div class="param">promises (optional)</div><div class="param-desc"><span class="param-type"><a href="#Promise">array[Promise]</a></span>  </div>
+      <div class="param">ty </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Type identifier (int, count, none...)
+ </div>
+<div class="param">data </div><div class="param-desc"><span class="param-type"><a href="#number">array[BigDecimal]</a></span> Data of the value
+ </div>
+<div class="param">promises (optional)</div><div class="param-desc"><span class="param-type"><a href="#Promise">array[Promise]</a></span> List of promises for the evaluation the value.
+ </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
