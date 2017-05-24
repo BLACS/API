@@ -1,0 +1,258 @@
+---
+swagger: "2.0"
+info:
+  description: "## Logical Clock\nThe logical time allows linearization, used to provide\
+    \ safe concurrency. With linearization of events the happened-before relation\
+    \ prevents race-conditions.\n## IO Operations on the sheet\nBoth read and write\
+    \ functions have a logical time parameter. This time is given by the clock service.\n\
+    As well, to enable a multi-agent interaction each agent identifies itself with\
+    \ a tag. So, a value identified by three parameters. Its coordinates, an agent\
+    \ tag and a logical time.\nIn BLACS we describe a grid in a new format. Instead\
+    \ of using the conventional sequence between two coordinates like A1;B2 we describe\
+    \ it by the dimensions of the grid. Describing grids by comprehension, allows\
+    \ to describe easily all kinds of grids. In particular one could describe infinite\
+    \ grids using special parameters, i.e. 0 lenght or width. Useful when a user doesn't\
+    \ know how many cells are in a given grid.\n## Evaluation of a formula\nThe evaluation\
+    \ of a given formula can be achieved by a single process or rather in parallel\
+    \ by many processes in an asynchronous way. To express this, a value defined by\
+    \ a formula is as well defined by a collection of promises. A promise is formed\
+    \ of a date, a grid description and a constant value. Therefore, a promise of\
+    \ evaluation can be on a part of the formula. This allows having a collection\
+    \ of evaluators trying to compute the formula. The date, indicates when a promise\
+    \ will be valid. Before this date, the value of the promise shall not be considered.\
+    \ Should an evaluator fail to fulfill its promise the value should be labeled\
+    \ none, to indicate that an evaluation is still needed. \n## Types\n### API Types\n\
+    In this API types are used to describe the arguments of a function. In particular\
+    \ read and write requests.\n### BLACS Types\nBLACS itself has three kind of types\
+    \ to describe values, none, constants (integers) and formulas (count). This types\
+    \ are used to ensure safety as well as make programming easier.\n"
+  version: "0.1"
+  title: "Pervasive functions for Big Data Layout for Asynchronous Computations on\
+    \ Spreadsheets (BLACS)"
+host: "virtserver.swaggerhub.com"
+basePath: "/blacs/pervasives/0.1"
+tags:
+- name: "clock"
+  description: "Logical Clock service"
+- name: "io"
+  description: "Input, output operations. Service to read and write a collection of\
+    \ values."
+schemes:
+- "https"
+paths:
+  /time/{sheet}:
+    get:
+      tags:
+      - "clock"
+      summary: "Returns the next logical time."
+      description: "The time advances after a call so that two subsequent calls are\
+        \ never equal.\n"
+      operationId: "getSheetTime"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "sheet"
+        in: "path"
+        description: "Name of the sheet"
+        required: true
+        type: "string"
+        maximum: 1
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "number"
+  /read/{sheet}:
+    post:
+      tags:
+      - "io"
+      summary: "Reads from spreadsheet"
+      description: "Reads from sheet the grid described by origin,width and length\
+        \ at time by agent identified by tag. If agent has no value defined use default.\n"
+      operationId: "readSheet"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "sheet"
+        in: "path"
+        description: "Name of the sheet"
+        required: true
+        type: "string"
+        maximum: 1
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/ReadRequest"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/LocatedValue"
+        410:
+          description: "IO error"
+  /write/{sheet}:
+    post:
+      tags:
+      - "io"
+      summary: "Writes to spreadsheet"
+      description: "Write on sheet the grid of dimension width by length at origin\
+        \ at time by agent identified with tag the values array in the same order.\n"
+      operationId: "writeSheet"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "sheet"
+        in: "path"
+        description: "Name of the sheet"
+        required: true
+        type: "string"
+        maximum: 1
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/WriteRequest"
+      responses:
+        200:
+          description: "successful operation"
+        410:
+          description: "IO error"
+definitions:
+  Promise:
+    type: "object"
+    required:
+    - "date"
+    - "domain"
+    - "value"
+    properties:
+      date:
+        type: "number"
+        description: "This real time date is used to tell when a promise will be valid,\
+          \ the time is counted since EPOCH.\n"
+      domain:
+        type: "array"
+        description: "This is the domain on which the formula will be evaluated by\
+          \ the promise.\n"
+        items:
+          type: "number"
+      value:
+        type: "number"
+        description: "The result of the formula, should a promise fail the value shall\
+          \ be none"
+  Time:
+    type: "number"
+    description: "Logical time"
+  WriteRequest:
+    type: "object"
+    required:
+    - "origin"
+    - "tag"
+    - "time"
+    - "values"
+    properties:
+      tag:
+        type: "string"
+        description: "The identifier of the agent that is requesting the write"
+      time:
+        $ref: "#/definitions/Time"
+      origin:
+        $ref: "#/definitions/Coordinate"
+      length:
+        type: "integer"
+        description: "A grid's length"
+      width:
+        type: "integer"
+        description: "A grid's width"
+      values:
+        type: "array"
+        description: "An ordered collection of values to be written in the grid"
+        items:
+          $ref: "#/definitions/TypedValue"
+    description: "Whenever an agent writes to the sheet it is performing a request.\
+      \ The parameter time is the logical time at which the write is being requested.\
+      \ The parameter origin is coordinates to start writing a grid.\n"
+  ReadRequest:
+    type: "object"
+    required:
+    - "length"
+    - "origin"
+    - "tag"
+    - "time"
+    properties:
+      tag:
+        type: "string"
+        description: "The identifier of the agent that is requesting the read."
+      time:
+        $ref: "#/definitions/Time"
+      origin:
+        $ref: "#/definitions/Coordinate"
+      length:
+        type: "number"
+        description: "A grid's length"
+      width:
+        type: "number"
+        description: "A grid's width"
+      default:
+        type: "string"
+        description: "Should the agent have no value defined, read from this agent's\
+          \ sheet"
+    description: "Whenever an agent reads the sheet it is performing a request. If\
+      \ the request is successful a new resources will be added to URI at which he\
+      \ will be able to read unordered collection of located values. The parameter\
+      \ time is the logical time at which the read is being requested. The parameter\
+      \ origin is coordinates to start reading a grid.\n"
+  Coordinate:
+    type: "object"
+    required:
+    - "col"
+    - "row"
+    properties:
+      row:
+        type: "integer"
+        format: "int64"
+        description: "Row number\n"
+      col:
+        type: "integer"
+        format: "int64"
+        description: "Column number\n"
+    description: "The coordinates of a value in a sheet indexed by row and column\
+      \ number.\n"
+  TypedValue:
+    type: "object"
+    required:
+    - "data"
+    - "ty"
+    properties:
+      ty:
+        type: "string"
+        description: "Type identifier (int, count, none...)\n"
+      data:
+        type: "array"
+        description: "Data of the value\n"
+        items:
+          type: "number"
+      promises:
+        type: "array"
+        description: "List of promises for the evaluation the value.\n"
+        items:
+          $ref: "#/definitions/Promise"
+    description: "Values in BLACS are typed an carry with them several other data\
+      \ useful for evaluators.\n"
+  LocatedValue:
+    type: "object"
+    required:
+    - "coords"
+    - "value"
+    properties:
+      coords:
+        $ref: "#/definitions/Coordinate"
+      value:
+        $ref: "#/definitions/TypedValue"
+    description: "A value and its coordinates on grid"
