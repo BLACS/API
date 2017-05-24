@@ -764,7 +764,7 @@ margin-bottom: 20px;
     },
     "domain" : {
       "type" : "array",
-      "example" : [ 6, 7 ],
+      "example" : [ 1, 1, 10, 5 ],
       "description" : "This is the domain on which the formula will be evaluated by the promise.\n",
       "items" : {
         "type" : "number"
@@ -772,6 +772,7 @@ margin-bottom: 20px;
     },
     "value" : {
       "type" : "number",
+      "example" : "nan",
       "description" : "The result of the formula, should a promise fail the value shall be none"
     }
   }
@@ -807,7 +808,8 @@ margin-bottom: 20px;
 };
   defs.Time = {
   "type" : "number",
-  "description" : "Logical time"
+  "description" : "Logical time",
+  "example" : 26
 };
   defs.TypedValue = {
   "type" : "object",
@@ -2366,7 +2368,7 @@ try {
             </div>
             <div id="generator">
                 <div class="content">
-                    Generated 2017-05-24T13:34:09.405Z
+                    Generated 2017-05-24T13:38:45.057Z
                 </div>
             </div>
         </div>
