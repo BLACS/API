@@ -1,0 +1,201 @@
+h1. Pervasive functions for Big Data Layout for Asynchronous Computations on Spreadsheets (BLACS) ## Logical Clock The logical time allows linearization, used to provide safe concurrency. With linearization of events the happened-before relation prevents race-conditions. ## IO Operations on the sheet Both read and write functions have a logical time parameter. This time is given by the clock service. As well, to enable a multi-agent interaction each agent identifies itself with a tag. So, a value identified by three parameters. Its coordinates, an agent tag and a logical time. In BLACS we describe a grid in a new format. Instead of using the conventional sequence between two coordinates like A1;B2 we describe it by the dimensions of the grid. Describing grids by comprehension, allows to describe easily all kinds of grids. In particular one could describe infinite grids using special parameters, i.e. 0 lenght or width. Useful when a user doesn't know how many cells are in a given grid. ## Evaluation of a formula The evaluation of a given formula can be achieved by a single process or rather in parallel by many processes in an asynchronous way. To express this, a value defined by a formula is as well defined by a collection of promises. A promise is formed of a date, a grid description and a constant value. Therefore, a promise of evaluation can be on a part of the formula. This allows having a collection of evaluators trying to compute the formula. The date, indicates when a promise will be valid. Before this date, the value of the promise shall not be considered. Should an evaluator fail to fulfill its promise the value should be labeled none, to indicate that an evaluation is still needed.  ## Types ### API Types In this API types are used to describe the arguments of a function. In particular read and write requests. ### BLACS Types BLACS itself has three kind of types to describe values, none, constants (integers) and formulas (count). This types are used to ensure safety as well as make programming easier. 
+
+*Version:* 0.1
+
+----
+
+{toc:printable=true|style=square|minLevel=2|maxLevel=3|type=list|outline=false|include=.*}
+
+h2. Endpoints
+
+    h3. getSheetTime
+    {status:colour=Yellow|title=get|subtle=false}
+    {code}
+    get /time/{sheet}
+    {code}
+    *Summary:* Returns the next logical time.
+    *Description:* The time advances after a call so that two subsequent calls are never equal. 
+
+
+    h4. Parameters
+        h5. Path Parameters
+        ||Name||Description||Required||Default||Pattern||
+        |sheet |Name of the sheet |(/) | |  |
+
+
+
+
+
+
+
+    h4. Responses
+        *Status Code:* 200
+        *Message:*     successful operation
+        {code:title=Response Type}
+BigDecimal
+        {code}
+        See [#models]
+
+
+
+        {code:title=Response Schema |collapse=true}
+{
+  "description" : "successful operation",
+  "schema" : {
+    "type" : "number"
+  }
+}
+        {code}
+    ----
+
+    h3. readSheet
+    {status:colour=Yellow|title=post|subtle=false}
+    {code}
+    post /read/{sheet}
+    {code}
+    *Summary:* Reads from spreadsheet
+    *Description:* Reads from sheet the grid described by origin,width and length at time by agent identified by tag. If agent has no value defined use default. 
+
+
+    h4. Parameters
+        h5. Path Parameters
+        ||Name||Description||Required||Default||Pattern||
+        |sheet |Name of the sheet |(/) | |  |
+
+        h5. Body Parameter
+        ||Name||Description||Required||Default||Pattern||
+        |body | |(/) | |  |
+
+
+
+
+
+
+    h4. Responses
+        *Status Code:* 200
+        *Message:*     successful operation
+        {code:title=Response Type}
+array[LocatedValue]
+        {code}
+        See [#models]
+
+
+
+        {code:title=Response Schema |collapse=true}
+{
+  "description" : "successful operation",
+  "schema" : {
+    "type" : "array",
+    "items" : {
+      "$ref" : "#/definitions/LocatedValue"
+    }
+  }
+}
+        {code}
+        *Status Code:* 410
+        *Message:*     IO error
+        {code:title=Response Type}
+
+        {code}
+        See [#models]
+
+
+
+        {code:title=Response Schema |collapse=true}
+{
+  "description" : "IO error"
+}
+        {code}
+    ----
+
+    h3. writeSheet
+    {status:colour=Yellow|title=post|subtle=false}
+    {code}
+    post /write/{sheet}
+    {code}
+    *Summary:* Writes to spreadsheet
+    *Description:* Write on sheet the grid of dimension width by length at origin at time by agent identified with tag the values array in the same order. 
+
+
+    h4. Parameters
+        h5. Path Parameters
+        ||Name||Description||Required||Default||Pattern||
+        |sheet |Name of the sheet |(/) | |  |
+
+        h5. Body Parameter
+        ||Name||Description||Required||Default||Pattern||
+        |body | |(/) | |  |
+
+
+
+
+
+
+    h4. Responses
+        *Status Code:* 200
+        *Message:*     successful operation
+        {code:title=Response Type}
+
+        {code}
+        See [#models]
+
+
+
+        {code:title=Response Schema |collapse=true}
+{
+  "description" : "successful operation"
+}
+        {code}
+        *Status Code:* 410
+        *Message:*     IO error
+        {code:title=Response Type}
+
+        {code}
+        See [#models]
+
+
+
+        {code:title=Response Schema |collapse=true}
+{
+  "description" : "IO error"
+}
+        {code}
+    ----
+
+h2. Models
+
+        h3. Coordinate
+        ||Field Name||Required||Type||Description||
+         |row | |Long |Row number  |
+ |col | |Long |Column number  |
+        h3. LocatedValue
+        ||Field Name||Required||Type||Description||
+         |coords | |Coordinate | |
+ |value | |TypedValue | |
+        h3. Promise
+        ||Field Name||Required||Type||Description||
+         |date | |BigDecimal |This real time date is used to tell when a promise will be valid, the time is counted since EPOCH.  |
+ |domain | |array[BigDecimal] |This is the domain on which the formula will be evaluated by the promise.  |
+ |value | |BigDecimal |The result of the formula, should a promise fail the value shall be none |
+        h3. ReadRequest
+        ||Field Name||Required||Type||Description||
+         |tag | |String |The identifier of the agent that is requesting the read. |
+ |time | |Time | |
+ |origin | |Coordinate | |
+ |length | |BigDecimal |A grid&#39;s length |
+ |width | |BigDecimal |A grid&#39;s width |
+ |default | |String |Should the agent have no value defined, read from this agent&#39;s sheet |
+        h3. Time
+        ||Field Name||Required||Type||Description||
+                h3. TypedValue
+        ||Field Name||Required||Type||Description||
+         |data | |array[BigDecimal] |Data of the value  |
+ |promises | |array[Promise] |List of promises for the evaluation the value.  |
+        h3. WriteRequest
+        ||Field Name||Required||Type||Description||
+         |tag | |String |The identifier of the agent that is requesting the write |
+ |time | |Time | |
+ |origin | |Coordinate | |
+ |length | |Integer |A grid&#39;s length |
+ |width | |Integer |A grid&#39;s width |
+ |values | |array[TypedValue] |An ordered collection of values to be written in the grid |
