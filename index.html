@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Pervasives functions for Big Data Layout for Asynchronous Computations on Spreadsheets (BLACS)</title>
+    <title>Pervasive functions for Big Data Layout for Asynchronous Computations on Spreadsheets (BLACS)</title>
     <style type="text/css">
       body {
 	font-family: Trebuchet MS, sans-serif;
@@ -179,20 +179,20 @@ font-style: italic;
     </style>
   </head>
   <body>
-  <h1>Pervasives functions for Big Data Layout for Asynchronous Computations on Spreadsheets (BLACS)</h1>
+  <h1>Pervasive functions for Big Data Layout for Asynchronous Computations on Spreadsheets (BLACS)</h1>
     <div class="app-desc">## Logical Clock
 The logical time allows linearization, used to provide safe concurrency. With linearization of events the happened-before relation prevents race-conditions.
 ## IO Operations on the sheet
-Both read and write functions have a logical time parametere. This time is given by the clock service.
-This way, the relation happened-before is consistent.As well, to enable a multiagent each agent identifies itself with a tag. So, a value identified by three parameters. It coordinates, an agent tag and a logical time.
-In BLACS we describe a grid in a new format. Instead of using the convetional sequence between two coordinates like A1;B2 we describe it by the dimensions of the grid. Describing grids by comprehension, allows to describe easily all kinds of grids. In particular one could describe inifinite grids using special parameters ie. 0 lenght or width. Usefull when a user doesn't know how many cells are in a given grid.
+Both read and write functions have a logical time parameter. This time is given by the clock service.
+As well, to enable a multi-agent interaction each agent identifies itself with a tag. So, a value identified by three parameters. Its coordinates, an agent tag and a logical time.
+In BLACS we describe a grid in a new format. Instead of using the conventional sequence between two coordinates like A1;B2 we describe it by the dimensions of the grid. Describing grids by comprehension, allows to describe easily all kinds of grids. In particular one could describe infinite grids using special parameters, i.e. 0 lenght or width. Useful when a user doesn't know how many cells are in a given grid.
 ## Evaluation of a formula
-The evaluation of a given formula can be achieved by a single process or rather in parallel by many processes in an asynchronous way. To express this, a value defined by a formula is as well defined by a collection of promosises. A promise is formed of a date, a grid description and a constant value. Therefore, a promise of evaluation can be on a part of the formula. This allows having a collection of evaluators trying to compute the formula. The date, indicates when a promise will be valid. Before this date, the value of the promise shall not be considered. Should an evaluator fail to fulfill its promise the value should be labeled none. To indicate that an evaluation is still needed. 
+The evaluation of a given formula can be achieved by a single process or rather in parallel by many processes in an asynchronous way. To express this, a value defined by a formula is as well defined by a collection of promises. A promise is formed of a date, a grid description and a constant value. Therefore, a promise of evaluation can be on a part of the formula. This allows having a collection of evaluators trying to compute the formula. The date, indicates when a promise will be valid. Before this date, the value of the promise shall not be considered. Should an evaluator fail to fulfill its promise the value should be labeled none, to indicate that an evaluation is still needed. 
 ## Types
 ### API Types
-In this API types are used to describe de arguments of a function. In particular read and write requests.
+In this API types are used to describe the arguments of a function. In particular read and write requests.
 ### BLACS Types
-BLACS itself has three kind of types to describe values, none, constants (integers) and formulae (count). This types are used to ensure safety as well as make programming easier.
+BLACS itself has three kind of types to describe values, none, constants (integers) and formulas (count). This types are used to ensure safety as well as make programming easier.
 </div>
     <div class="app-desc">More information: <a href="https://github.com/BLACS">https://github.com/BLACS</a></div>
     <div class="app-desc">Contact Info: <a href="colin.gonzalez@openmailbox.org">colin.gonzalez@openmailbox.org</a></div>
@@ -259,7 +259,7 @@ BLACS itself has three kind of types to describe values, none, constants (intege
 
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
-    succesful operation
+    successful operation
         <a href="#BigDecimal">BigDecimal</a>
   </div> <!-- method -->
   <hr/>
@@ -269,7 +269,7 @@ BLACS itself has three kind of types to describe values, none, constants (intege
     <a class="up" href="#__Methods">Up</a>
     <pre class="post"><code class="huge"><span class="http-method">post</span> /read/{sheet}</code></pre></div>
     <div class="method-summary">Reads from spreadsheet (<span class="nickname">readSheet</span>)</div>
-    <div class="method-notes">Reads from sheet the grid discribed by origin,width and length at time by agent identified by tag. If agent has no value defined use default.
+    <div class="method-notes">Reads from sheet the grid described by origin,width and length at time by agent identified by tag. If agent has no value defined use default.
 </div>
 
     <h3 class="field-label">Path parameters</h3>
@@ -310,7 +310,7 @@ BLACS itself has three kind of types to describe values, none, constants (intege
     "data" : [ 1.3579000000000001069366817318950779736042022705078125 ],
     "ty" : "aeiou",
     "promises" : [ {
-      "date" : { },
+      "date" : 1.3579000000000001069366817318950779736042022705078125,
       "domain" : [ 1.3579000000000001069366817318950779736042022705078125 ],
       "value" : 1.3579000000000001069366817318950779736042022705078125
     } ]
@@ -417,7 +417,7 @@ BLACS itself has three kind of types to describe values, none, constants (intege
   </div>
   <div class="model">
     <h3 class="field-label"><a name="LocatedValue">LocatedValue - </a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'></div>
+    <div class='model-description'>A value and its coordinates on grid</div>
     <div class="field-items">
       <div class="param">coords </div><div class="param-desc"><span class="param-type"><a href="#Coordinate">Coordinate</a></span>  </div>
 <div class="param">value </div><div class="param-desc"><span class="param-type"><a href="#TypedValue">TypedValue</a></span>  </div>
@@ -427,21 +427,24 @@ BLACS itself has three kind of types to describe values, none, constants (intege
     <h3 class="field-label"><a name="Promise">Promise - </a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'></div>
     <div class="field-items">
-      <div class="param">date </div><div class="param-desc"><span class="param-type"><a href="#Time">Time</a></span>  </div>
-<div class="param">domain </div><div class="param-desc"><span class="param-type"><a href="#number">array[BigDecimal]</a></span>  </div>
-<div class="param">value </div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span>  </div>
+      <div class="param">date </div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span> This real time date is used to tell when a promise will be valid, the time is counted since EPOCH.
+ </div>
+<div class="param">domain </div><div class="param-desc"><span class="param-type"><a href="#number">array[BigDecimal]</a></span> This is the domain on which the formula will be evaluated by the promise.
+ </div>
+<div class="param">value </div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span> The result of the formula, should a promise fail the value shall be none </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
     <h3 class="field-label"><a name="ReadRequest">ReadRequest - </a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'></div>
+    <div class='model-description'>Whenever an agent reads the sheet it is performing a request. If the request is successful a new resources will be added to URI at which he will be able to read unordered collection of located values. The parameter time is the logical time at which the read is being requested. The parameter origin is coordinates to start reading a grid.
+</div>
     <div class="field-items">
-      <div class="param">tag </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+      <div class="param">tag </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The identifier of the agent that is requesting the read. </div>
 <div class="param">time </div><div class="param-desc"><span class="param-type"><a href="#Time">Time</a></span>  </div>
 <div class="param">origin </div><div class="param-desc"><span class="param-type"><a href="#Coordinate">Coordinate</a></span>  </div>
-<div class="param">length </div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span>  </div>
-<div class="param">width (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span>  </div>
-<div class="param">default (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">length </div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span> A grid&#39;s length </div>
+<div class="param">width (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span> A grid&#39;s width </div>
+<div class="param">default (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Should the agent have no value defined, read from this agent&#39;s sheet </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -452,7 +455,8 @@ BLACS itself has three kind of types to describe values, none, constants (intege
   </div>
   <div class="model">
     <h3 class="field-label"><a name="TypedValue">TypedValue - </a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'></div>
+    <div class='model-description'>Values in BLACS are typed an carry with them several other data useful for evaluators.
+</div>
     <div class="field-items">
       <div class="param">ty </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Type identifier (int, count, none...)
  </div>
@@ -464,14 +468,15 @@ BLACS itself has three kind of types to describe values, none, constants (intege
   </div>
   <div class="model">
     <h3 class="field-label"><a name="WriteRequest">WriteRequest - </a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'></div>
+    <div class='model-description'>Whenever an agent writes to the sheet it is performing a request. The parameter time is the logical time at which the write is being requested. The parameter origin is coordinates to start writing a grid.
+</div>
     <div class="field-items">
-      <div class="param">tag </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+      <div class="param">tag </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The identifier of the agent that is requesting the write </div>
 <div class="param">time </div><div class="param-desc"><span class="param-type"><a href="#Time">Time</a></span>  </div>
 <div class="param">origin </div><div class="param-desc"><span class="param-type"><a href="#Coordinate">Coordinate</a></span>  </div>
-<div class="param">length (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
-<div class="param">width (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
-<div class="param">values </div><div class="param-desc"><span class="param-type"><a href="#TypedValue">array[TypedValue]</a></span>  </div>
+<div class="param">length (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> A grid&#39;s length </div>
+<div class="param">width (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> A grid&#39;s width </div>
+<div class="param">values </div><div class="param-desc"><span class="param-type"><a href="#TypedValue">array[TypedValue]</a></span> An ordered collection of values to be written in the grid </div>
     </div>  <!-- field-items -->
   </div>
   </body>
