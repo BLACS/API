@@ -730,11 +730,13 @@ margin-bottom: 20px;
     "row" : {
       "type" : "integer",
       "format" : "int64",
+      "example" : 32,
       "description" : "Row number\n"
     },
     "col" : {
       "type" : "integer",
       "format" : "int64",
+      "example" : 42,
       "description" : "Column number\n"
     }
   },
@@ -755,7 +757,7 @@ margin-bottom: 20px;
 };
   defs.Promise = {
   "type" : "object",
-  "required" : [ "date", "domain", "value" ],
+  "required" : [ "date", "domain" ],
   "properties" : {
     "date" : {
       "type" : "number",
@@ -772,7 +774,7 @@ margin-bottom: 20px;
     },
     "value" : {
       "type" : "number",
-      "example" : "nan",
+      "example" : 1024.0,
       "description" : "The result of the formula, should a promise fail the value shall be none"
     }
   }
@@ -783,6 +785,7 @@ margin-bottom: 20px;
   "properties" : {
     "tag" : {
       "type" : "string",
+      "example" : "87d9709102cad0afa36a46627c985eaf4c106de4",
       "description" : "The identifier of the agent that is requesting the read."
     },
     "time" : {
@@ -793,14 +796,17 @@ margin-bottom: 20px;
     },
     "length" : {
       "type" : "number",
+      "example" : 56.0,
       "description" : "A grid's length"
     },
     "width" : {
       "type" : "number",
+      "example" : 72.0,
       "description" : "A grid's width"
     },
     "default" : {
       "type" : "string",
+      "example" : "f654c60b82b85499791437fb9c7e4a5478140095",
       "description" : "Should the agent have no value defined, read from this agent's sheet"
     }
   },
@@ -813,12 +819,8 @@ margin-bottom: 20px;
 };
   defs.TypedValue = {
   "type" : "object",
-  "required" : [ "data", "ty" ],
+  "required" : [ "data" ],
   "properties" : {
-    "ty" : {
-      "type" : "string",
-      "description" : "Type identifier (int, count, none...)\n"
-    },
     "data" : {
       "type" : "array",
       "description" : "Data of the value\n",
@@ -834,7 +836,19 @@ margin-bottom: 20px;
       }
     }
   },
-  "description" : "Values in BLACS are typed an carry with them several other data useful for evaluators.\n"
+  "description" : "Values in BLACS are typed an carry with them several other data useful for evaluators.\n",
+  "example" : {
+    "ty" : "count",
+    "data" : [ 3, 4, 12, 8, 42 ],
+    "promises" : [ {
+      "date" : 1.495634087994263E9,
+      "domain" : [ 3, 4, 6, 8 ]
+    }, {
+      "date" : 1.495634178652321E9,
+      "domain" : [ 9, 8, 6, 8 ],
+      "value" : 4
+    } ]
+  }
 };
   defs.WriteRequest = {
   "type" : "object",
@@ -842,6 +856,7 @@ margin-bottom: 20px;
   "properties" : {
     "tag" : {
       "type" : "string",
+      "example" : "87d9709102cad0afa36a46627c985eaf4c106de4",
       "description" : "The identifier of the agent that is requesting the write"
     },
     "time" : {
@@ -852,14 +867,37 @@ margin-bottom: 20px;
     },
     "length" : {
       "type" : "integer",
+      "example" : 100,
       "description" : "A grid's length"
     },
     "width" : {
       "type" : "integer",
+      "example" : 25,
       "description" : "A grid's width"
     },
     "values" : {
       "type" : "array",
+      "example" : [ {
+        "ty" : "int",
+        "data" : [ 6 ],
+        "promises" : null
+      }, {
+        "ty" : "none",
+        "data" : null,
+        "promises" : null
+      }, {
+        "ty" : "count",
+        "data" : [ 1, 5, 10, 8, 42 ],
+        "promises" : [ {
+          "date" : 1.495633727587939E9,
+          "domaine" : [ 1, 5, 10, 1 ],
+          "value" : 5
+        }, {
+          "date" : 1.495633500875601E9,
+          "domain" : [ 2, 5, 10, 7 ],
+          "value" : 6
+        } ]
+      } ],
       "description" : "An ordered collection of values to be written in the grid",
       "items" : {
         "$ref" : "#/definitions/TypedValue"
@@ -2368,7 +2406,7 @@ try {
             </div>
             <div id="generator">
                 <div class="content">
-                    Generated 2017-05-24T13:38:45.057Z
+                    Generated 2017-05-24T13:59:23.737Z
                 </div>
             </div>
         </div>
