@@ -214,6 +214,7 @@ BLACS itself has three kind of types to describe values, none, constants (intege
   <h4><a href="#Io">Io</a></h4>
   <ul>
   <li><a href="#readSheet"><code><span class="http-method">post</span> /read/{sheet}</code></a></li>
+  <li><a href="#sheetHashGet"><code><span class="http-method">get</span> /{sheet}/{hash}</code></a></li>
   <li><a href="#writeSheet"><code><span class="http-method">post</span> /write/{sheet}</code></a></li>
   </ul>
 
@@ -291,6 +292,59 @@ BLACS itself has three kind of types to describe values, none, constants (intege
 
       <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
     </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#ReadPromise">ReadPromise</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "date" : 1.495632574829308E9,
+  "hash" : "f654c60b82b85499791437fb9c7e4a5478140095"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    successful operation
+        <a href="#ReadPromise">ReadPromise</a>
+    <h4 class="field-label">410</h4>
+    IO error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="sheetHashGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /{sheet}/{hash}</code></pre></div>
+    <div class="method-summary">The response (<span class="nickname">sheetHashGet</span>)</div>
+    <div class="method-notes">Whenever someone makes a read request, a promise is delivered. To promise has date at which the response will be read to download.
+</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">sheet (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the sheet </div><div class="param">hash (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; hash handed in the ReadPromise </div>
+    </div>  <!-- field-items -->
+
+
 
 
 
