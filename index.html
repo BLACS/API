@@ -397,6 +397,7 @@ BLACS itself has three kind of types to describe values, none, constants (intege
     <li><a href="#Coordinate"><code>Coordinate</code></a></li>
     <li><a href="#LocatedValue"><code>LocatedValue</code></a></li>
     <li><a href="#Promise"><code>Promise</code></a></li>
+    <li><a href="#ReadPromise"><code>ReadPromise</code></a></li>
     <li><a href="#ReadRequest"><code>ReadRequest</code></a></li>
     <li><a href="#Time"><code>Time</code></a></li>
     <li><a href="#TypedValue"><code>TypedValue</code></a></li>
@@ -431,6 +432,16 @@ BLACS itself has three kind of types to describe values, none, constants (intege
 <div class="param">domain </div><div class="param-desc"><span class="param-type"><a href="#number">array[BigDecimal]</a></span> This is the domain on which the formula will be evaluated by the promise.
  </div>
 <div class="param">value </div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span> The result of the formula, should a promise fail the value shall be none </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="ReadPromise">ReadPromise - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">date </div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span> This real time date is used to tell when a promise will be valid, the time is counted since EPOCH.
+ </div>
+<div class="param">hash </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The hash where the response to the read request will be available.
+ </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
