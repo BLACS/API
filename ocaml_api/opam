@@ -1,0 +1,19 @@
+opam-version: "1.2"
+name: "oblacs"
+version: "0.1"
+maintainer: "Colin González <colin.gonzalez@openmailbox.org>"
+authors: "Colin González <colin.gonzalez@openmailbox.org>"
+homepage: "https://github.com/blacs"
+bug-reports: "https://github.com/blacs/API"
+license: "MIT License"
+dev-repo: "https://github.com/blacs/API"
+build: [
+  [make]
+]
+install: [make "install"]
+remove: ["ocamlfind" "remove" "oblacs"]
+depends: [
+  "ocamlfind" {build} 
+  "ppx_deriving_yojson" {build} 
+  "ocurl" {build}
+]
