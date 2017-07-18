@@ -352,7 +352,7 @@ BLACS itself has three kind of types to describe definitions, values, none, cons
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
-      array[<a href="#Cell">Cell</a>]
+      array[<a href="#LocatedCell">LocatedCell</a>]
       
     </div>
 
@@ -361,16 +361,22 @@ BLACS itself has three kind of types to describe definitions, values, none, cons
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>[ {
-  "definition" : {
-    "data" : [ 1.3579000000000001069366817318950779736042022705078125 ],
-    "promises" : [ {
-      "date" : 1.495632574829308E9,
-      "domain" : [ 1, 1, 10, 5 ],
-      "value" : 1024.0
-    } ]
+  "cell" : {
+    "definition" : {
+      "data" : [ 1.3579000000000001069366817318950779736042022705078125 ],
+      "promises" : [ {
+        "date" : 1.495632574829308E9,
+        "domain" : [ 1, 1, 10, 5 ],
+        "value" : 1024.0
+      } ]
+    },
+    "value" : {
+      "data" : [ 1.3579000000000001069366817318950779736042022705078125 ]
+    }
   },
-  "value" : {
-    "data" : [ 1.3579000000000001069366817318950779736042022705078125 ]
+  "coords" : {
+    "col" : 42,
+    "row" : 32
   }
 } ]</code></pre>
 
@@ -617,7 +623,7 @@ BLACS itself has three kind of types to describe definitions, values, none, cons
 <div class="param">origin </div><div class="param-desc"><span class="param-type"><a href="#Coordinate">Coordinate</a></span>  </div>
 <div class="param">length (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> A grid&#39;s length </div>
 <div class="param">width (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> A grid&#39;s width </div>
-<div class="param">cells </div><div class="param-desc"><span class="param-type"><a href="#LocatedCell">array[LocatedCell]</a></span> An ordered collection of cells to be written in the grid </div>
+<div class="param">cells </div><div class="param-desc"><span class="param-type"><a href="#Cell">array[Cell]</a></span> An ordered collection of cells to be written in the grid </div>
     </div>  <!-- field-items -->
   </div>
   </body>
