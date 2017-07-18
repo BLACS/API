@@ -4,7 +4,7 @@ type t = {
   origin : Coordinates.t;
   length : int;
   width  : int;
-  values : Value.t list
+  values : Cell.t list
 } [@@deriving yojson]
 
 let write_request ~tag ~time ~origin ~length ~width ~values =

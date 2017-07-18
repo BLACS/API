@@ -5,8 +5,20 @@ let hash_service host sheet hash =
 let hash host sheet hash =
   let code, time, json = hash_service host sheet hash in
   match code with
-    200 ->  LocatedValue.located_value_list_of_json json
+    200 ->  LocatedCell.located_cell_list_of_json json
   | _   ->  raise Http.Connection_failure
+
+
+let size_service host sheet =
+  let path = Some ( "size/" ^ sheet ) in
+  Http.json_get_service host path None
+
+let size host sheet =
+  let code, time, json = size_service host sheet in
+  match code with
+    200 -> Dimension.dimension_of_json json
+  | _   -> raise Http.Connection_failure
+
 
 let read_service host sheet json_read_request =
   let path = Some ( "read/" ^ sheet) in
