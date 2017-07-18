@@ -10,6 +10,6 @@ all: all-generic
 AUTHORS  = $(shell cat AUTHORS | tr '\n' ',' | cut -d, -f1,4 | tr ',' '-')
 
 VERSION	  = 0.1
-TARGET	  = api
-TARGETEXT = api
-PACKAGE	  = api-$(AUTHORS)-$(VERSION)
+TARGET	  = liboblacs
+TARGETEXT = liboblacs
+PACKAGE	  = oblacs-$(AUTHORS)-$(VERSION)

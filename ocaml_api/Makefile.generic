@@ -3,7 +3,7 @@ BTARGET	 = $(TARGET).byte
 OTARGET	 = $(TARGET).native
 BLTARGET = $(TARGET).cma
 BNTARGET = $(TARGET).cmxa
-STARGET	 = $(OTARGET)
+STARGET	 = $(BNTARGET)
 
 #########################
 ## Tools configuration ##
@@ -28,9 +28,9 @@ HEADACHE = headache
 # Rules #
 #########
 
-.PHONY: configure all-generic byte opt doc clean dist install uninstall headers clear
+.PHONY: configure all-generic byte opt doc clean dist install uninstall headers clear cma cmxa
 
-all-generic: configure clear $(STARGET) $(TARGET)
+all-generic: configure clear $(STARGET)
 
 $(TARGET):
 	ln -s $(STARGET) $(TARGET)
@@ -38,9 +38,15 @@ $(TARGET):
 clear:
 	rm -f $(STARGET)
 
-opt: $(OTARGET)
+cma: $(BLTARGET)
 
-byte: $(BTARGET)
+cmxa: $(BNTARGET)
+
+test.byte: cma
+	$(OCAMLBUILD) -I src src/test.byte
+
+test.opt: cmxa
+	$(OCAMLBUILD) -I src src/test.native
 
 %:
 	@ $(OCAMLBUILD) src/$@
