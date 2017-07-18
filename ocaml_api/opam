@@ -7,10 +7,8 @@ homepage: "https://github.com/blacs"
 bug-reports: "https://github.com/blacs/API"
 license: "MIT License"
 dev-repo: "https://github.com/blacs/API"
-build: [
-  [make]
-]
-install: [make "install"]
+build: [make]
+install: [["export\ PREFIX=%{prefix}%"] [make "install"]]
 remove: ["ocamlfind" "remove" "oblacs"]
 depends: [
   "ocamlfind" {build} 
