@@ -192,7 +192,7 @@ The evaluation of a given formula can be achieved by a single process or rather 
 ### API Types
 In this API types are used to describe the arguments of a function. In particular read and write requests.
 ### BLACS Types
-BLACS itself has three kind of types to describe values, none, constants (integers) and formulas (count). This types are used to ensure safety as well as make programming easier.
+BLACS itself has three kind of types to describe definitions, values, none, constants (integers) and formulas (count). This types are used to ensure safety as well as make programming easier.
 </div>
     <div class="app-desc">More information: <a href="https://github.com/BLACS">https://github.com/BLACS</a></div>
     <div class="app-desc">Contact Info: <a href="colin.gonzalez@openmailbox.org">colin.gonzalez@openmailbox.org</a></div>
@@ -215,6 +215,7 @@ BLACS itself has three kind of types to describe values, none, constants (intege
   <ul>
   <li><a href="#readSheet"><code><span class="http-method">post</span> /read/{sheet}</code></a></li>
   <li><a href="#sheetHashGet"><code><span class="http-method">get</span> /{sheet}/{hash}</code></a></li>
+  <li><a href="#sizeSheet"><code><span class="http-method">get</span> /size/{sheet}</code></a></li>
   <li><a href="#writeSheet"><code><span class="http-method">post</span> /write/{sheet}</code></a></li>
   </ul>
 
@@ -270,7 +271,7 @@ BLACS itself has three kind of types to describe values, none, constants (intege
     <a class="up" href="#__Methods">Up</a>
     <pre class="post"><code class="huge"><span class="http-method">post</span> /read/{sheet}</code></pre></div>
     <div class="method-summary">Reads from spreadsheet (<span class="nickname">readSheet</span>)</div>
-    <div class="method-notes">Reads from sheet the grid described by origin,width and length at time by agent identified by tag. If agent has no value defined use default agent.
+    <div class="method-notes">Reads from sheet the grid described by origin,width and length at time by agent identified by tag. If agent has no cell defined use default agent.
 </div>
 
     <h3 class="field-label">Path parameters</h3>
@@ -351,15 +352,31 @@ BLACS itself has three kind of types to describe values, none, constants (intege
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
+      array[<a href="#Cell">Cell</a>]
       
-      array[Cell]
     </div>
 
     <!--Todo: process Response Object and its headers, schema, examples -->
 
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>[ "" ]</code></pre>
+    <pre class="example"><code>[ {
+  "definition" : {
+    "data" : [ 1.3579000000000001069366817318950779736042022705078125 ],
+    "promises" : [ {
+      "date" : 1.495632574829308E9,
+      "domain" : [ 1, 1, 10, 5 ],
+      "value" : 1024.0
+    } ]
+  },
+  "value" : {
+    "data" : [ 1.3579000000000001069366817318950779736042022705078125 ]
+  },
+  "coords" : {
+    "col" : 42,
+    "row" : 32
+  }
+} ]</code></pre>
 
     <h3 class="field-label">Produces</h3>
     This API call produces the following media types according to the <span class="header">Accept</span> request header;
@@ -375,6 +392,54 @@ BLACS itself has three kind of types to describe values, none, constants (intege
     <h4 class="field-label">410</h4>
     IO error
         <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="sizeSheet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /size/{sheet}</code></pre></div>
+    <div class="method-summary">Returns the size of the sheet. (<span class="nickname">sizeSheet</span>)</div>
+    <div class="method-notes">The size of the sheet at the present (latest time).
+</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">sheet (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Name of the sheet </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Dimension">Dimension</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "length" : 1000.0,
+  "width" : 500.0
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    succesful operation
+        <a href="#Dimension">Dimension</a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="writeSheet"/>
@@ -435,19 +500,30 @@ BLACS itself has three kind of types to describe values, none, constants (intege
 
   <h3>Table of Contents</h3>
   <ol>
+    <li><a href="#Cell"><code>Cell</code></a></li>
     <li><a href="#Coordinate"><code>Coordinate</code></a></li>
-    <li><a href="#LocatedDefinition"><code>LocatedDefinition</code></a></li>
+    <li><a href="#Dimension"><code>Dimension</code></a></li>
     <li><a href="#Promise"><code>Promise</code></a></li>
     <li><a href="#ReadPromise"><code>ReadPromise</code></a></li>
     <li><a href="#ReadRequest"><code>ReadRequest</code></a></li>
     <li><a href="#Time"><code>Time</code></a></li>
     <li><a href="#TypedDefinition"><code>TypedDefinition</code></a></li>
+    <li><a href="#TypedValue"><code>TypedValue</code></a></li>
     <li><a href="#WriteRequest"><code>WriteRequest</code></a></li>
   </ol>
 
   <div class="model">
+    <h3 class="field-label"><a name="Cell">Cell - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>A cell and its coordinates in the sheet</div>
+    <div class="field-items">
+      <div class="param">coords </div><div class="param-desc"><span class="param-type"><a href="#Coordinate">Coordinate</a></span>  </div>
+<div class="param">definition </div><div class="param-desc"><span class="param-type"><a href="#TypedDefinition">TypedDefinition</a></span>  </div>
+<div class="param">value (optional)</div><div class="param-desc"><span class="param-type"><a href="#TypedValue">TypedValue</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
     <h3 class="field-label"><a name="Coordinate">Coordinate - </a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>The coordinates of a value in a sheet indexed by row and column number.
+    <div class='model-description'>The coordinates of a cell in a sheet indexed by row and column number.
 </div>
     <div class="field-items">
       <div class="param">row </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span> Row number
@@ -457,11 +533,13 @@ BLACS itself has three kind of types to describe values, none, constants (intege
     </div>  <!-- field-items -->
   </div>
   <div class="model">
-    <h3 class="field-label"><a name="LocatedDefinition">LocatedDefinition - </a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>A value and its coordinates on grid</div>
+    <h3 class="field-label"><a name="Dimension">Dimension - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
     <div class="field-items">
-      <div class="param">coords </div><div class="param-desc"><span class="param-type"><a href="#Coordinate">Coordinate</a></span>  </div>
-<div class="param">value </div><div class="param-desc"><span class="param-type"><a href="#TypedDefinition">TypedDefinition</a></span>  </div>
+      <div class="param">length (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span> The length of a sheet
+ </div>
+<div class="param">width (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span> The width of a sheet
+ </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -472,7 +550,7 @@ BLACS itself has three kind of types to describe values, none, constants (intege
  </div>
 <div class="param">domain </div><div class="param-desc"><span class="param-type"><a href="#number">array[BigDecimal]</a></span> This is the domain on which the formula will be evaluated by the promise.
  </div>
-<div class="param">value </div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span> The result of the formula, should a promise fail the value shall be none </div>
+<div class="param">value (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span> The result of the formula, should a promise fail the value shall be null </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -496,7 +574,7 @@ BLACS itself has three kind of types to describe values, none, constants (intege
 <div class="param">length </div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span> A grid&#39;s length </div>
 <div class="param">filter_formulas </div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> Require to filter formulas when performing a read </div>
 <div class="param">width (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span> A grid&#39;s width </div>
-<div class="param">default (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Should the agent have no value defined, read from this agent&#39;s sheet </div>
+<div class="param">default (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Should the agent have no cell defined, read from this agent&#39;s sheet </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -510,9 +588,18 @@ BLACS itself has three kind of types to describe values, none, constants (intege
     <div class='model-description'>Defintions in BLACS are typed an carry with them several other data useful for evaluators.
 </div>
     <div class="field-items">
-      <div class="param">data </div><div class="param-desc"><span class="param-type"><a href="#number">array[BigDecimal]</a></span> Data of the value
+      <div class="param">data </div><div class="param-desc"><span class="param-type"><a href="#number">array[BigDecimal]</a></span> Data of the definition.
  </div>
-<div class="param">promises (optional)</div><div class="param-desc"><span class="param-type"><a href="#Promise">array[Promise]</a></span> List of promises for the evaluation the value.
+<div class="param">promises (optional)</div><div class="param-desc"><span class="param-type"><a href="#Promise">array[Promise]</a></span> List of promises for the evaluation the definition.
+ </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="TypedValue">TypedValue - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Values in BLACS are typed.
+</div>
+    <div class="field-items">
+      <div class="param">data </div><div class="param-desc"><span class="param-type"><a href="#number">array[BigDecimal]</a></span> Data of the value.
  </div>
     </div>  <!-- field-items -->
   </div>
