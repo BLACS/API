@@ -371,10 +371,6 @@ BLACS itself has three kind of types to describe definitions, values, none, cons
   },
   "value" : {
     "data" : [ 1.3579000000000001069366817318950779736042022705078125 ]
-  },
-  "coords" : {
-    "col" : 42,
-    "row" : 32
   }
 } ]</code></pre>
 
@@ -503,6 +499,7 @@ BLACS itself has three kind of types to describe definitions, values, none, cons
     <li><a href="#Cell"><code>Cell</code></a></li>
     <li><a href="#Coordinate"><code>Coordinate</code></a></li>
     <li><a href="#Dimension"><code>Dimension</code></a></li>
+    <li><a href="#LocatedCell"><code>LocatedCell</code></a></li>
     <li><a href="#Promise"><code>Promise</code></a></li>
     <li><a href="#ReadPromise"><code>ReadPromise</code></a></li>
     <li><a href="#ReadRequest"><code>ReadRequest</code></a></li>
@@ -514,10 +511,9 @@ BLACS itself has three kind of types to describe definitions, values, none, cons
 
   <div class="model">
     <h3 class="field-label"><a name="Cell">Cell - </a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>A cell and its coordinates in the sheet</div>
+    <div class='model-description'>A cell definition and value in the sheet</div>
     <div class="field-items">
-      <div class="param">coords </div><div class="param-desc"><span class="param-type"><a href="#Coordinate">Coordinate</a></span>  </div>
-<div class="param">definition </div><div class="param-desc"><span class="param-type"><a href="#TypedDefinition">TypedDefinition</a></span>  </div>
+      <div class="param">definition </div><div class="param-desc"><span class="param-type"><a href="#TypedDefinition">TypedDefinition</a></span>  </div>
 <div class="param">value (optional)</div><div class="param-desc"><span class="param-type"><a href="#TypedValue">TypedValue</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
@@ -540,6 +536,14 @@ BLACS itself has three kind of types to describe definitions, values, none, cons
  </div>
 <div class="param">width (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span> The width of a sheet
  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="LocatedCell">LocatedCell - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>A cell and its cordinates</div>
+    <div class="field-items">
+      <div class="param">coords </div><div class="param-desc"><span class="param-type"><a href="#Coordinate">Coordinate</a></span>  </div>
+<div class="param">cell </div><div class="param-desc"><span class="param-type"><a href="#C&#39;#/definitions/Cell&#39;">C&#39;#/definitions/Cell&#39;</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
