@@ -1,2 +1,3 @@
+PKG ocurl ppx_deriving ppx_deriving_yojson
 S src/**
 B _build/**
