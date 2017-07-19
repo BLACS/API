@@ -2,8 +2,9 @@
 BTARGET	 = $(TARGET).byte
 OTARGET	 = $(TARGET).native
 BLTARGET = $(TARGET).cma
-BNTARGET = $(TARGET).cmxa
-STARGET	 = $(BNTARGET)
+NLTARGET = $(TARGET).cmxa
+SLTARGET = $(TARGET).cmxs
+STARGET	 = $(NLTARGET)
 
 #########################
 ## Tools configuration ##
@@ -28,9 +29,9 @@ HEADACHE = headache
 # Rules #
 #########
 
-.PHONY: configure all-generic byte opt doc clean dist install uninstall headers clear cma cmxa
+.PHONY: configure all-generic byte opt doc clean dist install uninstall headers clear
 
-all-generic: configure clear $(STARGET)
+all-generic: configure clear byte opt
 
 $(TARGET):
 	ln -s $(STARGET) $(TARGET)
@@ -38,14 +39,14 @@ $(TARGET):
 clear:
 	rm -f $(STARGET)
 
-cma: $(BLTARGET)
+byte: $(BLTARGET)
 
-cmxa: $(BNTARGET)
+opt: $(NLTARGET) $(SLTARGET)
 
-test.byte: cma
+test.byte: byte
 	$(OCAMLBUILD) -I src src/test.byte
 
-test.opt: cmxa
+test.opt: opt
 	$(OCAMLBUILD) -I src src/test.native
 
 %:
@@ -56,16 +57,14 @@ byte-debug:
 	rm -f $(STARGET)
 	ln -s $(BTARGET) $(STARGET)
 
-ifeq ($(strip $(PREFIX)),)
-install uninstall:
-	@echo "Cannot (un)install $(EXECUTABLE): the PREFIX variable is undefined." && false
-else
-install: $(EXECUTABLE)
-	mkdir -p $(PREFIX)/bin/
-	install $(STARGET) $(PREFIX)/bin/$(TARGET)
+
+install:
+	ocamlfind install $(TARGET) META              \
+	_build/src/blacsapi.a _build/src/blacsapi.cm* \
+	_build/src/api/*.cmi   _build/src/api/*.cmx   \
+	_build/src/types/*.cmi _build/src/types/*.cmx
 uninstall:
-	/bin/rm -f $(PREFIX)/bin/$(TARGET)
-endif
+	ocamlfind remove $(TARGET)
 
 #######################
 # Administrative part #

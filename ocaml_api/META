@@ -1,0 +1,4 @@
+description = "BLACS API"
+version = "0.1"
+archive(byte) = "blacsapi.cma"
+archive(native) = "blacsapi.cmxa"
