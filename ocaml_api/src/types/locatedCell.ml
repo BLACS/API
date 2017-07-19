@@ -5,6 +5,10 @@ type t = {
 
 type located_cell_list = t list [@@deriving yojson]
 
+let located_cell (coordinates,cell) =
+  {cell=cell;
+   coords=coordinates}
+
 let located_cell_list_to_json lcl =
   Yojson.Safe.to_string (located_cell_list_to_yojson lcl)
     
