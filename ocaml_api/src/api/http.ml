@@ -1,10 +1,10 @@
 open Curl
 
-exception Connection_failure
+exception Connection_failure of int
 
 let accept_json  = "accept: application/json"
-
-let content_json = "content_type: application/json"
+  
+let content_json = "content-type: application/json"
 
 let http_connection ~url ~header ~writer  =
   let connection = init () in
@@ -26,7 +26,7 @@ let cleanup_request connection =
   cleanup connection
 
 let make_path ~host ~path = match path with
-    Some p -> Printf.sprintf "%s/%s" host p
+    Some p -> host ^ "/" ^  p
   | None -> host
 
 let make_get_url ~host ~path ~query=
@@ -40,7 +40,7 @@ let get_request ~host ~writer ~header ~path ~query =
   http_connection ~url:url ~header:header ~writer:writer
 
 let post_request ~host ~writer ~header ~path ~body =
-  let url  = make_path ~host:host ~path:path in
+  let url  = make_path ~host ~path in
   let connection = http_connection ~url:url
       ~header:header ~writer:writer          in
   set_post connection true;
@@ -63,14 +63,14 @@ let json_service request contents =
   cleanup_request request;
   code,time,raw
 
-let json_get_service ?(size=128) host path query  =
+let json_get_service ?(size=4096) host path query  =
   let write,contents = writer size             in
   let request = get_request ~host:host
       ~writer:write ~header:[accept_json]
       ~path:path ~query:query                  in
   json_service request contents
 
-let json_post_service ?(size=128) host path body  =
+let json_post_service ?(size=4096) host path body  =
   let write,contents = writer size        in
   let request = post_request ~host:host
       ~writer:write
