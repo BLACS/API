@@ -24,7 +24,7 @@ type date = float
 type promise = {
   date   : date;
   domain : int list;
-  definition  : int option
+  value  : int option
 } [@@deriving yojson]
            
 type t = {
