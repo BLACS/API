@@ -6,7 +6,7 @@ let hash host sheet hash =
   let code, time, json = hash_service host sheet hash in
   match code with
     200 ->  LocatedCell.located_cell_list_of_json json
-  | _   ->  raise Http.Connection_failure
+  | c   ->  raise (Http.Connection_failure c)
 
 
 let size_service host sheet =
@@ -16,8 +16,8 @@ let size_service host sheet =
 let size host sheet =
   let code, time, json = size_service host sheet in
   match code with
-    200 -> Dimension.dimension_of_json json
-  | _   -> raise Http.Connection_failure
+    200 -> Dimensions.dimensions_of_json json
+  | c   -> raise (Http.Connection_failure c)
 
 
 let read_service host sheet json_read_request =
@@ -31,7 +31,7 @@ let read host sheet read_request =
     read_service host sheet json_read_request     in
   match code with
     200 -> ReadPromise.read_promise_of_json json
-  | _   -> raise Http.Connection_failure
+  | c   -> raise (Http.Connection_failure c)
 
 
 let write_service host sheet json_write_request =
@@ -45,4 +45,4 @@ let write host sheet write_request =
     write_service host sheet json_write_request      in
   match code with
     200 -> ()
-  | _   -> raise Http.Connection_failure
+  | c   -> raise (Http.Connection_failure c)
