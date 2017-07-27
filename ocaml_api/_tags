@@ -1,4 +1,4 @@
 <src/api>:include
 <src/types>:include
 <src>: include
-true:  package(unix), package(ppx_deriving_yojson), package(curl), package(str)
+true:  package(unix), package(ppx_deriving_yojson), package(curl), package(str), package(ppx_deriving_yojson.runtime)
