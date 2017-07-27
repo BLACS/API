@@ -6,4 +6,4 @@ let time host sheet =
   let code,host,json = time_service host sheet in
   match code with
     200 ->  Time.time_of_json json
-  | _   ->  raise Http.Connection_failure
+  | c   ->  raise (Http.Connection_failure c)
