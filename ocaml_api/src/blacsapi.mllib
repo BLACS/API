@@ -3,7 +3,7 @@ api/Clock
 api/Io
 api/Http
 types/Coordinates
-types/Dimension
+types/Dimensions
 types/Cell
 types/LocatedCell
 types/ReadPromise
