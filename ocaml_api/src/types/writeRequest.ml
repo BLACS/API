@@ -4,16 +4,16 @@ type t = {
   origin : Coordinates.t;
   length : int;
   width  : int;
-  values : Cell.t list
+  cells  : Cell.t list
 } [@@deriving yojson]
 
-let write_request ~tag ~time ~origin ~length ~width ~values =
+let write_request ~tag ~time ~origin ~length ~width ~cells =
   { tag    = tag;
     time   = time;
     origin = origin;
     length = length;
     width  = width;
-    values = values }
+    cells = cells }
 
 let write_request_to_json wr =
   Yojson.Safe.to_string (to_yojson wr)
