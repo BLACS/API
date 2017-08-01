@@ -1,6 +1,6 @@
 type t = {
-  value      : Value.t option;
-  definition : Definition.t
+  definition : Definition.t;
+  value      : Value.t option
 } [@@deriving yojson]
 
 let cell ?v d =
@@ -12,4 +12,3 @@ let cell_to_json c =
 
 let cell_of_json j =
   of_yojson ( Yojson.Safe.from_string j )
-

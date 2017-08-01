@@ -17,12 +17,12 @@ let ty_of_yojson =
            
 type t = {
   ty       : ty;
-  data     : (int list)     option;
+  data     : int option
 } [@@deriving yojson]
 
 let int i   = {
   ty       = TyInt;
-  data     = Some [i]
+  data     = Some i
 }
 
 let null_int = {
@@ -41,7 +41,7 @@ let value v =
   | Some i -> int i
 
 let succ = function
-    { ty = TyInt; data = Some [i] } ->
+    { ty = TyInt; data = Some i } ->
     int (i + 1)
   | _ -> assert false
 
@@ -50,7 +50,7 @@ let string_of_value =
   function
     { ty = TyNone; data = None }     -> "⊥"
   | { ty = TyInt;  data = None }     -> "null"
-  | { ty = TyInt;  data = Some [i] } -> sprintf "val %d" i
+  | { ty = TyInt;  data = Some i } -> sprintf "val %d" i
   | _ -> assert false
 
 
